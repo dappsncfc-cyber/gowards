@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+    <!-- Strict referrer policy to fix Forbidden 403 errors -->
+    <meta name="referrer" content="no-referrer">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gowards Independent Funeral Services | Fakenham</title>
+    
+    <!-- Tailwind CSS for utility styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Gilda+Display&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    
+    <style>
+        /* Base Reset & Variables */
+        :root {
+            --accent-purple: #af4acc;
+            --accent-purple-dark: #963fb1;
+            --accent-purple-light: #f3ebff;
+            --text-main: #2d3748;
+            --text-muted: #718096;
+            --bg-light: #f7fafc;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * { 
+            box-sizing: border-box; 
+            margin: 0; 
+            padding: 0; 
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            color: var(--text-main);
+            background-color: #ffffff;
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, .serif { 
+            font-family: 'Gilda Display', serif; 
+        }
+
+        .container { 
+            max-width: 1200px; 
+            margin: 0 auto; 
+            padding: 0 24px; 
+        }
+
+        .text-center { text-align: center; }
+        .accent-text { color: var(--accent-purple); }
+        .accent-bg { background-color: var(--accent-purple); }
+
+        /* Hero Section */
+        .hero-container {
+            position: relative;
+            height: 100vh;
+            min-height: 600px;
+            max-height: 800px;
+            width: 100%;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #000;
+        }
+
+        .hero-video {
+            position: absolute;
+            top: 50%; 
+            left: 50%;
+            width: 100%; 
+            height: 100%;
+            transform: translate(-50%, -50%);
+            object-fit: cover; 
+            z-index: 1;
+        }
+
+        .hero-overlay {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.3), rgba(0,0,0,0.6));
+            z-index: 2;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 3;
+            color: white;
+            padding: 2rem;
+            max-width: 1000px;
+        }
+
+        .hero-content h1 {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            font-weight: 400;
+        }
+
+        .divider {
+            width: 80px;
+            height: 3px;
+            margin: 0 auto 2rem;
+            border-radius: 2px;
+        }
+
+        /* About Section */
+        .section-padding { padding: 100px 0; }
+        
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            align-items: center;
+        }
+
+        .about-image {
+            width: 100%;
+            border-radius: 24px;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.12);
+            display: block;
+        }
+
+        .about-content h2 { 
+            font-size: clamp(2rem, 4vw, 3rem); 
+            margin-bottom: 2rem; 
+            color: #1a202c; 
+        }
+
+        .about-content p { 
+            margin-bottom: 1.5rem; 
+            font-size: 1.125rem; 
+            color: #4a5568; 
+            font-weight: 300;
+        }
+
+        .cta-row { 
+            display: flex; 
+            gap: 20px; 
+            margin-top: 40px; 
+            flex-wrap: wrap; 
+        }
+
+        .btn {
+            padding: 16px 32px;
+            border-radius: 100px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            font-size: 1rem;
+            cursor: pointer;
+            border: none;
+        }
+
+        .btn-primary { 
+            background: var(--accent-purple); 
+            color: white; 
+            box-shadow: 0 10px 20px rgba(175, 74, 204, 0.2);
+        }
+
+        .btn-outline { 
+            background: transparent;
+            border: 2px solid var(--accent-purple); 
+            color: var(--accent-purple); 
+        }
+
+        .btn:hover { 
+            opacity: 0.95; 
+            transform: translateY(-3px); 
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+        }
+
+        /* Services Grid Symmetry */
+        .services-header { 
+            background: var(--bg-light); 
+            padding: 80px 0; 
+            border-top: 1px solid #edf2f7; 
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(1, 1fr);
+            gap: 30px;
+            padding: 80px 0;
+        }
+
+        @media (min-width: 768px) {
+            .services-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .services-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        .service-card {
+            background: white;
+            border-radius: 24px;
+            overflow: hidden;
+            border: 1px solid #edf2f7;
+            text-align: center;
+            transition: var(--transition);
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        .service-card:hover { 
+            transform: translateY(-8px); 
+            box-shadow: 0 20px 40px rgba(175,74,204,0.12); 
+        }
+
+        .img-box { 
+            height: 260px; 
+            background: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            flex-shrink: 0;
+        }
+
+        .img-box img { 
+            width: 100%; 
+            height: 100%; 
+            object-fit: cover; 
+            transition: var(--transition);
+        }
+
+        .card-body { 
+            padding: 35px; 
+            flex-grow: 1; 
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .card-body h3 { 
+            font-size: 1.25rem; 
+            margin-bottom: 16px; 
+            letter-spacing: 1px; 
+            text-transform: uppercase; 
+            color: #2d3748;
+        }
+
+        .card-body p {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+
+        .bg-purple-light { background-color: var(--accent-purple-light); }
+
+        /* Reviews Widget */
+        .reviews-anchor {
+            position: fixed;
+            right: 30px;
+            bottom: 30px;
+            z-index: 1000;
+        }
+
+        .reviews-pill {
+            background: white;
+            padding: 12px 24px;
+            border-radius: 100px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            cursor: pointer;
+            border: 1px solid #e2e8f0;
+            transition: var(--transition);
+        }
+
+        .reviews-dropdown {
+            position: absolute;
+            bottom: 75px;
+            right: 0;
+            width: 350px;
+            background: white;
+            border-radius: 24px;
+            box-shadow: 0 25px 60px rgba(0,0,0,0.2);
+            border: 1px solid #e2e8f0;
+            visibility: hidden;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: var(--transition);
+            overflow: hidden;
+        }
+
+        .reviews-anchor:hover .reviews-dropdown {
+            visibility: visible;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .star-box { color: #fbbf24; font-weight: 700; display: flex; align-items: center; gap: 6px; font-size: 1.1rem; }
+
+        .drop-content { max-height: 400px; overflow-y: auto; padding: 10px; }
+        
+        .review-card { padding: 20px; border-bottom: 1px solid #f1f5f9; }
+        .review-card:last-child { border-bottom: none; }
+        .review-card .stars { color: #fbbf24; font-size: 0.8rem; margin-bottom: 8px; }
+        .review-card .name { font-size: 1rem; font-weight: 700; color: #334155; margin-bottom: 4px; display: block; }
+        .review-card .text { font-size: 0.9rem; color: #64748b; line-height: 1.6; font-style: italic; }
+
+        .footer-logo { 
+            max-height: 100px; 
+            width: auto; 
+            transition: transform 0.3s ease; 
+        }
+        .footer-logo:hover { 
+            transform: scale(1.05); 
+        }
+
+        @media (max-width: 768px) {
+            .hero-container { height: 70vh; }
+            .section-padding { padding: 60px 0; }
+            .about-grid { grid-template-columns: 1fr; text-align: center; }
+            .cta-row { justify-content: center; }
+            .reviews-dropdown { width: calc(100vw - 40px); right: -10px; }
+        }
+    </style>
+    <script>
+        // Breakout helper to ensure navigation happens in the main window
+        function navigateTop(url) {
+            window.top.location.href = url;
+        }
+    </script>
+</head>
+<body>
+
+    <!-- Hero Section -->
+    <section class="hero-container">
+        <video class="hero-video" autoplay muted loop playsinline referrerpolicy="no-referrer">
+            <source src="https://video.wixstatic.com/video/37dc30_a713387eb8df424a92d0f08694a322b3/1080p/mp4/file.mp4" type="video/mp4">
+        </video>
+        <div class="hero-overlay"></div>
+        <div class="hero-content text-center">
+            <h1>The Only Independent Funeral Director in Fakenham</h1>
+            <div class="divider accent-bg"></div>
+            <p style="font-size: clamp(1.1rem, 3vw, 1.6rem); font-weight: 300; font-style: italic;">Dedicated to supporting you in your time of need.</p>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="section-padding bg-white">
+        <div class="container about-grid">
+            <div class="about-image-wrapper">
+                <img src="https://static.wixstatic.com/media/37dc30_67964348f7fc4127ab46f9c9f5bd8e0f~mv2.jpg" 
+                     alt="Adrian Amis - Gowards Funeral Director" class="about-image" referrerpolicy="no-referrer" crossorigin="anonymous">
+            </div>
+            <div class="about-content">
+                <h2 class="serif">Compassion & Experience</h2>
+                <p>Gowards Independent Funerals offer a complete funeral service to Fakenham and North Norfolk with the assurance of being wholly independent. We have offered many years of experience, sympathy and care to our clients.</p>
+                <p>This experience enables Adrian and the team to be able to meet any requests you or your family may have. Whether you wish to visit our office in Bridge Street, Fakenham or would like us to visit you in the comfort of your own home, we offer a sympathetic and discrete efficient service.</p>
+                <p class="accent-text serif" style="font-style: italic; font-weight: 500; font-size: 1.4rem;">Available 24 hours a day, 365 days a year.</p>
+                
+                <div class="cta-row">
+                    <button onclick="navigateTop('https://www.gowardsindependentfunerals.co.uk/aboutus')" class="btn btn-outline">Read Our Story</button>
+                    <button onclick="navigateTop('tel:01328851313')" class="btn btn-primary">
+                        <i class="fas fa-phone-alt"></i> 01328 851313
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Header -->
+    <section class="services-header text-center">
+        <div class="container">
+            <h2 class="serif" style="font-size: clamp(2.5rem, 5vw, 3.5rem);">Our Services</h2>
+            <div class="divider accent-bg" style="width: 60px; margin-top: 15px;"></div>
+        </div>
+    </section>
+
+    <!-- Services Grid -->
+    <section class="bg-white">
+        <div class="container services-grid">
+            
+            <!-- Card 1: Packages -->
+            <div class="service-card">
+                <div class="img-box">
+                    <img src="https://static.wixstatic.com/media/9be13ba9815d4065bba62ab6a0114dab.jpg" alt="Funeral Packages" referrerpolicy="no-referrer" crossorigin="anonymous">
+                </div>
+                <div class="card-body">
+                    <div>
+                        <h3 class="serif">Funeral Packages</h3>
+                        <p>A comprehensive range of options tailored to meet the unique requirements of your family.</p>
+                    </div>
+                    <button onclick="navigateTop('https://www.gowardsindependentfunerals.co.uk/funeralpackagesandcosts')" class="btn btn-primary">View Packages</button>
+                </div>
+            </div>
+
+            <!-- Card 2: Quality Assurance -->
+            <div class="service-card">
+                <div class="img-box" style="padding: 50px;">
+                    <img src="https://static.wixstatic.com/media/37dc30_d42a6c487c674a28af9f818303c12118~mv2.jpg" alt="SAIF Logo" style="object-fit: contain;" referrerpolicy="no-referrer" crossorigin="anonymous">
+                </div>
+                <div class="card-body">
+                    <div>
+                        <h3 class="serif">Quality Assurance</h3>
+                        <p>Proud members of the National Society of Allied and Independent Funeral Directors.</p>
+                    </div>
+                    <button onclick="navigateTop('https://www.gowardsindependentfunerals.co.uk/blank-5')" class="accent-text" style="font-weight: 700; font-size: 1.1rem; display: inline-flex; align-items: center; gap: 8px; justify-content: center;">
+                        View Standards <i class="fas fa-certificate" style="font-size: 0.9rem;"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Card 3: Coffin Range -->
+            <div class="service-card">
+                <div class="img-box">
+                    <img src="https://static.wixstatic.com/media/37dc30_54a27d2814cd469eb4bfbac7347d7fe8~mv2.png" alt="Coffin Range" referrerpolicy="no-referrer" crossorigin="anonymous">
+                </div>
+                <div class="card-body">
+                    <div>
+                        <h3 class="serif">Coffin Range</h3>
+                        <p>Browse our dignified selection of handcrafted traditional and modern coffins.</p>
+                    </div>
+                    <button onclick="navigateTop('https://www.gowardsindependentfunerals.co.uk/coffins-1')" class="btn btn-primary">Browse Range</button>
+                </div>
+            </div>
+
+            <!-- Card 4: Ashes Caskets -->
+            <div class="service-card">
+                <div class="img-box" style="padding: 30px;">
+                    <img src="https://static.wixstatic.com/media/37dc30_6b6bc1a7228b4e0681bb95c2a5b3977f~mv2.png" alt="Ashes Caskets" style="object-fit: contain;" referrerpolicy="no-referrer" crossorigin="anonymous">
+                </div>
+                <div class="card-body">
+                    <div>
+                        <h3 class="serif">Ashes Caskets</h3>
+                        <p>A beautiful selection of memorial caskets to provide a lasting tribute to your loved one.</p>
+                    </div>
+                    <button onclick="navigateTop('https://www.gowardsindependentfunerals.co.uk/casketsandscattertubes')" class="btn btn-primary">View Selection</button>
+                </div>
+            </div>
+
+            <!-- Card 5: Planning Ahead -->
+            <div class="service-card bg-purple-light">
+                <div class="card-body" style="padding-top: 60px; padding-bottom: 60px;">
+                    <div>
+                        <h3 class="serif" style="font-size: 1.75rem; margin-bottom: 24px;">Planning Ahead</h3>
+                        <p style="font-size: 1.1rem; color: #4a5568; margin-bottom: 30px;">Relieve your family of the burden by ensuring your wishes are documented and funded.</p>
+                    </div>
+                    <button onclick="navigateTop('https://www.gowardsindependentfunerals.co.uk/helpandsupport')" class="accent-text" style="font-weight: 700; font-size: 1.2rem; display: inline-flex; align-items: center; gap: 10px; justify-content: center;">
+                        Learn More <i class="fas fa-arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Card 6: Memorial Jewellery -->
+            <div class="service-card">
+                <div class="img-box" style="padding: 50px;">
+                    <img src="https://static.wixstatic.com/media/37dc30_ce07239d21124da8804371f3ba9cc6bb~mv2.avif" alt="Memorial Jewellery" style="object-fit: contain;" referrerpolicy="no-referrer" crossorigin="anonymous">
+                </div>
+                <div class="card-body">
+                    <div>
+                        <h3 class="serif">Memorial Jewellery</h3>
+                        <p>Unique keepsakes containing a small amount of ashes or hair to keep memories close.</p>
+                    </div>
+                    <button onclick="navigateTop('https://www.everwith.co.uk')" class="btn btn-primary">Explore Collection</button>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Google Reviews Widget -->
+    <div class="reviews-anchor">
+        <div class="reviews-dropdown">
+            <div class="p-5 border-b border-slate-100 flex justify-between items-center">
+                <h4 style="margin: 0; font-weight: 700; color: #1e293b;">Google Reviews</h4>
+                <div class="star-box">5.0 <i class="fas fa-star"></i></div>
+            </div>
+            <div class="drop-content">
+                <div class="review-card">
+                    <div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                    <span class="name">Russell Loades</span>
+                    <p class="text">"Gowards Funeral Services provided exceptional support and guidance from start to finish. Their professionalism and care was outstanding."</p>
+                </div>
+                <div class="review-card">
+                    <div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                    <span class="name">Net Dunn</span>
+                    <p class="text">"The help, advice and friendship that Heather provided after my Mum's death was invaluable. My Dad and I cannot thank you enough."</p>
+                </div>
+                <div class="review-card">
+                    <div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                    <span class="name">Karen Raisbury</span>
+                    <p class="text">"I cannot speak highly enough of Heather & Paul. Gowards Funeral Services previously carried out the funerals for my family."</p>
+                </div>
+            </div>
+            <div class="p-4 bg-slate-50">
+                <button onclick="navigateTop('https://g.page/r/CdE0kk-eB3v7EBM/review')" class="btn btn-primary" style="width: 100%; border-radius: 12px; padding: 12px; font-size: 0.9rem;">Write a Review</button>
+            </div>
+        </div>
+        <div class="reviews-pill">
+            <svg style="width: 24px; height: 24px;" viewBox="0 0 24 24">
+                <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+                <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+                <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z"/>
+                <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.66l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 12-4.53z"/>
+            </svg>
+            <div class="star-box">
+                <span>5.0</span>
+                <i class="fas fa-star"></i>
+            </div>
+            <span style="font-size: 0.9rem; font-weight: 700; color: #475569;">Reviews</span>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer id="contact" class="bg-slate-900 text-white pt-20 w-full">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16 text-left">
+                <!-- Branding -->
+                <div class="col-span-1 lg:col-span-1">
+                    <div class="mb-6">
+                        <span class="serif text-xl font-bold uppercase tracking-widest leading-tight text-white">Gowards Independent Funeral Services Ltd</span>
+                    </div>
+                    <p class="text-slate-400 text-sm leading-relaxed mb-6">
+                        Independent, family-run directors providing sympathetic and discrete services across North Norfolk.
+                    </p>
+                    <div class="flex gap-4">
+                        <button onclick="navigateTop('https://www.facebook.com/profile.php?id=61576219457872')" class="text-slate-400 hover:text-white text-xl transition-colors" referrerpolicy="no-referrer"><i class="fab fa-facebook"></i></button>
+                        <button onclick="navigateTop('https://www.instagram.com/gowardsfakenham/')" class="text-slate-400 hover:text-white text-xl transition-colors" referrerpolicy="no-referrer"><i class="fab fa-instagram"></i></button>
+                    </div>
+                </div>
+
+                <!-- Contact Info -->
+                <div>
+                    <h4 class="font-bold text-lg mb-6 uppercase tracking-widest">Contact Info</h4>
+                    <ul class="space-y-4 text-slate-400 text-sm">
+                        <li class="flex gap-3">
+                            <i class="fas fa-map-marker-alt mt-1 text-slate-500"></i>
+                            <span>Bridge Street, Fakenham,<br>Norfolk, NR21 9AY</span>
+                        </li>
+                        <li class="flex gap-3">
+                            <i class="fas fa-phone-alt mt-1 text-slate-500"></i>
+                            <div>
+                                <button onclick="navigateTop('tel:01328851313')" class="hover:text-white transition-colors block font-bold text-left">01328 851313</button>
+                                <button onclick="navigateTop('tel:07733378109')" class="hover:text-white transition-colors block text-xs mt-1 text-left">Mobile: 07733 378109</button>
+                            </div>
+                        </li>
+                        <li class="flex gap-3 text-left">
+                            <i class="fas fa-envelope mt-1 text-slate-500"></i>
+                            <button onclick="navigateTop('mailto:info@gowardsindependentfunerals.com')" class="hover:text-white transition-colors text-left break-all">info@gowardsindependentfunerals.com</button>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Navigation -->
+                <div>
+                    <h4 class="font-bold text-lg mb-6 uppercase tracking-widest">Navigation</h4>
+                    <ul class="space-y-4 text-slate-400 text-sm">
+                        <li><button onclick="navigateTop('https://www.gowardsindependentfunerals.co.uk/aboutus')" class="hover:text-white transition-colors">About Us</button></li>
+                        <li><button onclick="navigateTop('https://www.gowardsindependentfunerals.co.uk/funeralpackagesandcosts')" class="hover:text-white transition-colors">Funeral Packages</button></li>
+                        <li><button onclick="navigateTop('the-team.html')" class="hover:text-white transition-colors">The Team</button></li>
+                        <li><button onclick="navigateTop('https://www.gowardsindependentfunerals.co.uk/blank-5')" class="hover:text-white transition-colors">Information & Downloads</button></li>
+                    </ul>
+                </div>
+
+                <!-- Information -->
+                <div>
+                    <h4 class="font-bold text-lg mb-6 uppercase tracking-widest">Information</h4>
+                    <ul class="space-y-4 text-slate-400 text-sm">
+                        <li><button onclick="navigateTop('https://www.gowardsindependentfunerals.co.uk/blank')" class="hover:text-white transition-colors underline">Privacy Policy</button></li>
+                        <li class="pt-4 border-t border-slate-800">
+                            <p class="text-[10px] uppercase tracking-tighter text-slate-500">Registration No. 08334736</p>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Accreditation Logos -->
+        <div class="bg-white py-12 w-full mt-4">
+            <div class="max-w-7xl mx-auto px-4 flex flex-wrap justify-center items-center gap-12 md:gap-24">
+                <img src="https://static.wixstatic.com/media/37dc30_165cc67a17d3467ab7aa3d3389f35719~mv2.png" alt="NAFD Member" class="footer-logo" referrerpolicy="no-referrer" crossorigin="anonymous">
+                <img src="https://static.wixstatic.com/media/37dc30_f8aa9d4558fe417689d9e5f87355d967~mv2.png" alt="SAIF Member" class="footer-logo" referrerpolicy="no-referrer" crossorigin="anonymous">
+                <img src="https://static.wixstatic.com/media/37dc30_3929c1230a364b4fb68dc80161343711~mv2.jpg" alt="Dementia Aware" class="footer-logo" style="object-fit: contain;" referrerpolicy="no-referrer" crossorigin="anonymous">
+            </div>
+        </div>
+
+        <div class="bg-slate-900 pt-10 pb-10 text-center text-slate-500 text-xs">
+            <p>&copy; 2026 Gowards Independent Funeral Services Ltd. All Rights Reserved.</p>
+            <p class="mt-2 font-medium text-slate-400">Available 24 hours a day, 365 days a year across Fakenham and Norfolk.</p>
+        </div>
+    </footer>
+
+</body>
+</html>
