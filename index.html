@@ -289,12 +289,23 @@
             width: 100%;
             overflow: hidden;
             background-color: #f8f9fa;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
         .team-image {
             width: 100%;
             height: 100%;
             object-fit: cover;
             transition: transform 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
+        }
+        /* Fallback icon when image fails */
+        .image-fallback {
+            position: absolute;
+            font-size: 4rem;
+            color: #cbd5e1;
+            display: none;
         }
         .team-card:hover .team-image {
             transform: scale(1.06);
@@ -603,6 +614,13 @@
         }
     </style>
     <script>
+        // Handle broken images by showing a placeholder and hiding the broken img tag
+        function handleImgError(img) {
+            img.style.display = 'none';
+            const fallback = img.parentElement.querySelector('.image-fallback');
+            if (fallback) fallback.style.display = 'block';
+        }
+
         // Helper function to force navigation of the top-level window
         function navigateTop(url) {
             window.top.location.href = url;
@@ -1994,9 +2012,9 @@
         </div>
     </div>
 
-    <!-- Glassmorphic Pop-Up Modal: Meet The Team -->
+    <!-- Glassmorphic Pop-Up Modal: Meet Our Team -->
     <div id="team-modal" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-md hidden items-center justify-center p-3 sm:p-6 md:p-8 overflow-y-auto" onclick="if(event.target === this) closeTeamModal()">
-        <div class="glass-modal relative w-full max-w-6xl max-h-[90vh] overflow-y-auto rounded-3xl p-6 sm:p-10 text-slate-800 custom-scrollbar my-auto">
+        <div class="glass-modal relative w-full max-w-7xl max-h-[90vh] overflow-y-auto rounded-3xl p-6 sm:p-10 text-slate-800 custom-scrollbar my-auto">
 
             <!-- Close Button -->
             <button type="button" onclick="closeTeamModal()" class="sticky top-0 float-right z-30 w-10 h-10 -mt-2 -mr-2 sm:-mt-4 sm:-mr-4 flex items-center justify-center bg-white/80 hover:bg-purple-600 hover:text-white text-slate-700 rounded-full transition-all border border-white/80 shadow-md focus:outline-none" aria-label="Close Modal">
@@ -2005,41 +2023,61 @@
 
             <!-- Header Section -->
             <div class="max-w-4xl mx-auto mb-16 text-center pt-2">
-                <h1 class="text-4xl md:text-6xl font-bold text-slate-900 mb-4">Meet The Team</h1>
+                <h1 class="text-4xl md:text-6xl font-bold text-slate-900 mb-4">Meet Our Team</h1>
                 <div class="w-24 h-1 accent-bg mx-auto mb-6 rounded-full"></div>
                 <p class="text-lg md:text-xl text-slate-600 max-w-3xl mx-auto italic serif leading-relaxed">
-                    "A dedicated family of professionals providing compassionate and sympathetic care to Fakenham & North Norfolk."
+                    "A dedicated team of professionals providing compassionate, personal, and sympathetic care to Fakenham and the surrounding districts."
                 </p>
             </div>
 
             <!-- Team Grid -->
             <div class="mb-20 text-left">
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 sm:gap-10">
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
 
                     <!-- Adrian Amis -->
                     <div class="team-card glass-card rounded-3xl overflow-hidden">
                         <div class="team-image-container">
-                            <img src="https://static.wixstatic.com/media/37dc30_67964348f7fc4127ab46f9c9f5bd8e0f~mv2.jpg/v1/fill/w_600,h_750,al_c,q_85/adrian.jpg" alt="Adrian Amis" class="team-image" decoding="async">
+                            <i class="fas fa-user image-fallback"></i>
+                            <img src="https://images.weserv.nl/?url=static.wixstatic.com/media/37dc30_67964348f7fc4127ab46f9c9f5bd8e0f~mv2.jpg&w=600&h=750&fit=cover&output=webp&q=80"
+                                 alt="Adrian Amis" class="team-image" fetchpriority="high" decoding="async" onerror="handleImgError(this)">
                         </div>
-                        <div class="p-8">
-                            <h3 class="text-2xl font-bold text-slate-800 mb-1 text-left">Adrian Amis</h3>
-                            <p class="accent-text font-medium text-sm uppercase tracking-widest mb-4 text-left">Owner, Funeral Arranger & Director</p>
-                            <p class="text-slate-600 text-sm leading-relaxed text-left">
-                                Adrian is the owner and manager of Gowards Independent Funeral Services in Fakenham and Cromer & District Independent Funeral Services.
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold text-slate-800 mb-1">Adrian Amis</h3>
+                            <p class="accent-text font-medium text-xs uppercase tracking-widest mb-3">Owner & Funeral Director</p>
+                            <p class="text-slate-600 text-xs leading-relaxed">
+                                Adrian acquired Gowards Independent Funeral Services in 2025, ensuring Fakenham's only truly independent family funeral directors continues to serve the local community with the same high standards and personal care.
                             </p>
                         </div>
                     </div>
 
-                    <!-- Catherine -->
+                    <!-- Paul Cook -->
                     <div class="team-card glass-card rounded-3xl overflow-hidden">
                         <div class="team-image-container">
-                            <img src="https://static.wixstatic.com/media/37dc30_b87355b17fb84689a807f35190b7bae8~mv2.jpg/v1/fill/w_600,h_750,al_c,q_85/catherine.jpg" alt="Catherine" class="team-image" decoding="async">
+                            <i class="fas fa-user image-fallback"></i>
+                            <img src="https://images.weserv.nl/?url=static.wixstatic.com/media/37dc30_7fbd7abdb70d4315892ac5d666f040ac~mv2.jpg&w=600&h=750&fit=cover&output=webp&q=80"
+                                 alt="Paul Cook" class="team-image" fetchpriority="high" decoding="async" onerror="handleImgError(this)">
                         </div>
-                        <div class="p-8">
-                            <h3 class="text-2xl font-bold text-slate-800 mb-1 text-left">Catherine</h3>
-                            <p class="accent-text font-medium text-sm uppercase tracking-widest mb-4 text-left">Funeral Arranger</p>
-                            <p class="text-slate-600 text-sm leading-relaxed text-left">
-                                Dedicated to supporting families during their most difficult moments, ensuring every detail is handled with dignity and care.
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold text-slate-800 mb-1">Paul Cook</h3>
+                            <p class="accent-text font-medium text-xs uppercase tracking-widest mb-3">Funeral Director & Arranger</p>
+                            <p class="text-slate-600 text-xs leading-relaxed">
+                                Paul gained his Diploma in Funeral Directing in 1988, and has worked in the funeral profession for over 40 years. Having joined Gowards in 2016, he is a well-known figure who takes great pride in providing a dignified and personal service to local families.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Michael -->
+                    <div class="team-card glass-card rounded-3xl overflow-hidden">
+                        <div class="team-image-container">
+                            <i class="fas fa-user image-fallback"></i>
+                            <img src="https://images.weserv.nl/?url=static.wixstatic.com/media/37dc30_5e74091aeb7c41229badd333027634d2~mv2.jpg&w=600&h=750&fit=cover&output=webp&q=80"
+                                 alt="Michael" class="team-image" fetchpriority="high" decoding="async" onerror="handleImgError(this)">
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold text-slate-800 mb-1">Michael</h3>
+                            <p class="accent-text font-medium text-xs uppercase tracking-widest mb-3">Bearer & Driver</p>
+                            <p class="text-slate-600 text-xs leading-relaxed">
+                                After 20 years working in public service, Michael has been in the funeral industry now for over 10 years. His dedication translates into the exceptional care he provides to families across North Norfolk.
                             </p>
                         </div>
                     </div>
@@ -2047,17 +2085,136 @@
                     <!-- Peter -->
                     <div class="team-card glass-card rounded-3xl overflow-hidden">
                         <div class="team-image-container">
-                            <img src="https://static.wixstatic.com/media/37dc30_c363fb4dd7bb4879b1c5089afd52eed5~mv2.png/v1/fill/w_600,h_750,al_c,q_85/peter.png" alt="Peter" class="team-image" decoding="async">
+                            <i class="fas fa-user image-fallback"></i>
+                            <img src="https://images.weserv.nl/?url=static.wixstatic.com/media/37dc30_c363fb4dd7bb4879b1c5089afd52eed5~mv2.png&w=600&h=750&fit=cover&output=webp&q=80"
+                                 alt="Peter" class="team-image" fetchpriority="high" decoding="async" onerror="handleImgError(this)">
                         </div>
-                        <div class="p-8">
-                            <h3 class="text-2xl font-bold text-slate-800 mb-1 text-left">Peter</h3>
-                            <p class="accent-text font-medium text-sm uppercase tracking-widest mb-4 text-left">Bearer and Driver</p>
-                            <p class="text-slate-600 text-sm leading-relaxed text-left">
-                                Formerly worked at Crisp Maltings, Peter brings local understanding and dedicated work ethic to Fakenham.
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold text-slate-800 mb-1">Peter</h3>
+                            <p class="accent-text font-medium text-xs uppercase tracking-widest mb-3">Bearer & Driver</p>
+                            <p class="text-slate-600 text-xs leading-relaxed">
+                                A familiar face in Fakenham, Peter previously worked at Crisp Maltings. He brings a deep local understanding and a quiet, respectful presence to the services we conduct.
                             </p>
                         </div>
                     </div>
 
+                    <!-- David -->
+                    <div class="team-card glass-card rounded-3xl overflow-hidden">
+                        <div class="team-image-container">
+                            <i class="fas fa-user image-fallback"></i>
+                            <img src="https://images.weserv.nl/?url=static.wixstatic.com/media/37dc30_55ea432bb8e348d7ba4796681dc0bef9~mv2.jpg&w=600&h=750&fit=cover&output=webp&q=80"
+                                 alt="David" class="team-image" loading="lazy" decoding="async" onerror="handleImgError(this)">
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold text-slate-800 mb-1">David</h3>
+                            <p class="accent-text font-medium text-xs uppercase tracking-widest mb-3">Bearer & Driver</p>
+                            <p class="text-slate-600 text-xs leading-relaxed">
+                                David joined the team after over 30 years with the NHS. His extensive background in patient care means families can rest assured that their loved ones are in safe, professional hands.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Barrie -->
+                    <div class="team-card glass-card rounded-3xl overflow-hidden">
+                        <div class="team-image-container">
+                            <i class="fas fa-user image-fallback"></i>
+                            <img src="https://images.weserv.nl/?url=static.wixstatic.com/media/37dc30_a263f8b64c13400a83ddf6d90dabf834~mv2.jpg&w=600&h=750&fit=cover&output=webp&q=80"
+                                 alt="Barrie" class="team-image" loading="lazy" decoding="async" onerror="handleImgError(this)">
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold text-slate-800 mb-1">Barrie</h3>
+                            <p class="accent-text font-medium text-xs uppercase tracking-widest mb-3">Bearer & Driver</p>
+                            <p class="text-slate-600 text-xs leading-relaxed">
+                                Barrie is a seasoned professional within the funeral industry. His years of experience ensure that our operations run with the discipline and dignity that local families expect.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- John -->
+                    <div class="team-card glass-card rounded-3xl overflow-hidden">
+                        <div class="team-image-container">
+                            <i class="fas fa-user image-fallback"></i>
+                            <img src="https://images.weserv.nl/?url=static.wixstatic.com/media/37dc30_cabae35661e84dad860601a634b7a32d~mv2.png&w=600&h=750&fit=cover&output=webp&q=80"
+                                 alt="John" class="team-image" loading="lazy" decoding="async" onerror="handleImgError(this)">
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold text-slate-800 mb-1">John</h3>
+                            <p class="accent-text font-medium text-xs uppercase tracking-widest mb-3">Bearer & Driver</p>
+                            <p class="text-slate-600 text-xs leading-relaxed">
+                                John's career has been built on attention to detail and precision. He brings these vital skills to our service team, helping to maintain our reputation for respectful funeral conducting.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Kieran -->
+                    <div class="team-card glass-card rounded-3xl overflow-hidden">
+                        <div class="team-image-container">
+                            <i class="fas fa-user image-fallback"></i>
+                            <img src="https://images.weserv.nl/?url=static.wixstatic.com/media/37dc30_2d5fe48f67af4aac92de4f476a385ba2~mv2.jpg&w=600&h=750&fit=cover&output=webp&q=80"
+                                 alt="Kieran" class="team-image" loading="lazy" decoding="async" onerror="handleImgError(this)">
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold text-slate-800 mb-1">Kieran</h3>
+                            <p class="accent-text font-medium text-xs uppercase tracking-widest mb-3">Bearer</p>
+                            <p class="text-slate-600 text-xs leading-relaxed">
+                                Adrian's brother, Kieran acts as a bearer for the Gowards team during busier periods. He provides valuable support, ensuring every family receives the attention they deserve.
+                            </p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Image Gallery Section -->
+            <div class="glass-panel rounded-3xl p-6 sm:p-10 mb-12 border border-white/80">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl md:text-4xl font-bold text-slate-900 mb-3">Our Facilities and Fleet</h2>
+                    <div class="w-16 h-1 accent-bg mx-auto rounded-full"></div>
+                </div>
+
+                <!-- Gallery grid -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+                    <!-- Facilities Section -->
+                    <div class="gallery-item shadow-md relative flex items-center justify-center">
+                        <i class="fas fa-image image-fallback"></i>
+                        <img src="https://images.weserv.nl/?url=static.wixstatic.com/media/37dc30_3a9e2f8f606b4db28d3c8c5301da71c1~mv2.jpg&w=600&h=600&fit=cover&output=webp&q=80" class="gallery-img" loading="lazy" decoding="async" alt="Our Private Chapel" onerror="handleImgError(this)">
+                    </div>
+                    <div class="gallery-item shadow-md relative flex items-center justify-center">
+                        <i class="fas fa-image image-fallback"></i>
+                        <img src="https://images.weserv.nl/?url=static.wixstatic.com/media/37dc30_aefad51e2c284b8a8b38e2f37562b890~mv2.png&w=600&h=600&fit=cover&output=webp&q=80" class="gallery-img" loading="lazy" decoding="async" alt="Facility Interior" onerror="handleImgError(this)">
+                    </div>
+                    <div class="gallery-item shadow-md relative flex items-center justify-center">
+                        <i class="fas fa-image image-fallback"></i>
+                        <img src="https://images.weserv.nl/?url=static.wixstatic.com/media/37dc30_6f2ff29ed2774989a91821631c34899e~mv2.png&w=600&h=600&fit=cover&output=webp&q=80" class="gallery-img" loading="lazy" decoding="async" alt="Gowards Branding" onerror="handleImgError(this)">
+                    </div>
+                    <div class="gallery-item shadow-md relative flex items-center justify-center">
+                        <i class="fas fa-image image-fallback"></i>
+                        <img src="https://images.weserv.nl/?url=static.wixstatic.com/media/37dc30_90f9be04b81547cbacdabcd3b640b21f~mv2.png&w=600&h=600&fit=cover&output=webp&q=80" class="gallery-img" loading="lazy" decoding="async" alt="Fakenham Premises" onerror="handleImgError(this)">
+                    </div>
+
+                    <!-- Cars & Fleet Section -->
+                    <div class="gallery-item shadow-md relative flex items-center justify-center">
+                        <i class="fas fa-image image-fallback"></i>
+                        <img src="https://images.weserv.nl/?url=static.wixstatic.com/media/37dc30_b3d739587f8740e785b8887726d95d38~mv2.png&w=600&h=600&fit=cover&output=webp&q=80" class="gallery-img" loading="lazy" decoding="async" alt="Funeral Home Exterior with Hearse" onerror="handleImgError(this)">
+                    </div>
+                    <div class="gallery-item shadow-md relative flex items-center justify-center">
+                        <i class="fas fa-image image-fallback"></i>
+                        <img src="https://images.weserv.nl/?url=static.wixstatic.com/media/37dc30_ff4e8deff0ee4df5b5cb8f5188f793ea~mv2.png&w=600&h=600&fit=cover&output=webp&q=80" class="gallery-img" loading="lazy" decoding="async" alt="Funeral Fleet" onerror="handleImgError(this)">
+                    </div>
+                    <div class="gallery-item shadow-md relative flex items-center justify-center">
+                        <i class="fas fa-image image-fallback"></i>
+                        <img src="https://images.weserv.nl/?url=static.wixstatic.com/media/37dc30_31583f05e6c244ee92149d0dca221cf8~mv2.jpg&w=600&h=600&fit=cover&output=webp&q=80" class="gallery-img" loading="lazy" decoding="async" alt="Our Vehicles" onerror="handleImgError(this)">
+                    </div>
+                    <div class="gallery-item shadow-md relative flex items-center justify-center">
+                        <i class="fas fa-image image-fallback"></i>
+                        <img src="https://images.weserv.nl/?url=static.wixstatic.com/media/37dc30_73adf7732bb3494ab0e510e63407d7a9~mv2.jpg&w=600&h=600&fit=cover&output=webp&q=80" class="gallery-img" loading="lazy" decoding="async" alt="Executive Fleet" onerror="handleImgError(this)">
+                    </div>
+
+                    <!-- Moved image (Formerly second) -->
+                    <div class="gallery-item shadow-md relative flex items-center justify-center">
+                        <i class="fas fa-image image-fallback"></i>
+                        <img src="https://images.weserv.nl/?url=static.wixstatic.com/media/37dc30_c57d2b4e74384a6a942442da2e458151~mv2.jpg&w=600&h=600&fit=cover&output=webp&q=80" class="gallery-img" loading="lazy" decoding="async" alt="Office Facility" onerror="handleImgError(this)">
+                    </div>
                 </div>
             </div>
 
