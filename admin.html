@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Portal | Gowards Independent Funeral Services</title>
+    <meta name="robots" content="noindex, nofollow">
+
+    <!-- Tailwind CSS & Font Awesome -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Gilda+Display&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            color: #2d3748;
+            background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 50%, #f3e8f5 100%);
+            background-attachment: fixed;
+            min-height: 100vh;
+        }
+        h1, h2, h3, .serif {
+            font-family: 'Gilda Display', serif;
+        }
+        .accent-text { color: #af4acc; }
+        .accent-bg { background-color: #af4acc; }
+        .accent-border { border-color: #af4acc; }
+
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.78);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            box-shadow: 0 8px 32px 0 rgba(175, 74, 204, 0.08);
+        }
+        .glass-panel-dark {
+            background: rgba(15, 23, 42, 0.88);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            box-shadow: 0 12px 40px 0 rgba(0, 0, 0, 0.3);
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.9);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.04);
+            transition: all 0.25s ease;
+        }
+        .glass-card:hover {
+            box-shadow: 0 12px 30px rgba(175, 74, 204, 0.12);
+            border-color: rgba(175, 74, 204, 0.3);
+        }
+        .form-input {
+            width: 100%;
+            padding: 0.65rem 1rem;
+            border-radius: 0.75rem;
+            border: 1px solid #cbd5e1;
+            background-color: #ffffff;
+            transition: all 0.2s ease;
+            outline: none;
+            font-size: 0.925rem;
+        }
+        .form-input:focus {
+            border-color: #af4acc;
+            box-shadow: 0 0 0 3px rgba(175, 74, 204, 0.15);
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 7px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: rgba(175, 74, 204, 0.35);
+            border-radius: 6px;
+        }
+    </style>
+</head>
+<body class="relative text-slate-800 antialiased min-h-screen flex flex-col justify-between">
+
+    <!-- Ambient Glass Orbs -->
+    <div class="fixed inset-0 pointer-events-none z-[-1] overflow-hidden">
+        <div class="absolute -top-32 -left-32 w-96 h-96 bg-purple-300/30 rounded-full blur-3xl"></div>
+        <div class="absolute top-1/3 -right-32 w-96 h-96 bg-purple-200/40 rounded-full blur-3xl"></div>
+        <div class="absolute bottom-10 left-1/4 w-96 h-96 bg-indigo-100/40 rounded-full blur-3xl"></div>
+    </div>
+
+    <!-- Header -->
+    <header class="sticky top-0 z-40 glass-panel border-b border-white/60 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <div class="flex items-center gap-4">
+                <a href="index.html" class="flex items-center gap-3 group">
+                    <img class="h-12 w-auto object-contain rounded-md shadow-sm" src="https://static.wixstatic.com/media/37dc30_53edd024edf54f98b39fbc272fe3654d~mv2.jpg" alt="Gowards Independent Funeral Services">
+                </a>
+                <div class="border-l border-slate-300 pl-4">
+                    <h1 class="text-lg font-bold text-slate-800 flex items-center gap-2">
+                        <i class="fas fa-lock text-purple-600"></i> Admin Portal
+                    </h1>
+                    <p class="text-xs text-slate-500">Live Website Price & Description Manager</p>
+                </div>
+            </div>
+
+            <div class="flex items-center gap-3">
+                <a href="index.html" target="_blank" class="px-4 py-2 rounded-xl text-xs font-semibold text-purple-700 bg-purple-50 hover:bg-purple-100 border border-purple-200 transition-colors flex items-center gap-2">
+                    <i class="fas fa-external-link-alt"></i> View Website
+                </a>
+                <button id="logoutBtn" onclick="handleLogout()" class="hidden px-4 py-2 rounded-xl text-xs font-semibold text-slate-600 hover:text-red-600 bg-white/80 hover:bg-red-50 border border-slate-200 transition-colors flex items-center gap-2">
+                    <i class="fas fa-sign-out-alt"></i> Log Out
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
+
+        <!-- ================= LOGIN SCREEN ================= -->
+        <section id="loginScreen" class="flex items-center justify-center min-h-[65vh]">
+            <div class="glass-card max-w-md w-full p-8 sm:p-10 rounded-3xl shadow-2xl border border-white/90 text-center relative overflow-hidden">
+                <div class="w-16 h-16 mx-auto mb-5 rounded-2xl bg-purple-100/80 flex items-center justify-center text-purple-700 text-2xl shadow-inner">
+                    <i class="fas fa-shield-alt"></i>
+                </div>
+                <h2 class="text-3xl font-bold text-slate-900 mb-2">Staff Login</h2>
+                <p class="text-sm text-slate-600 mb-6">Please enter your security code to manage prices and descriptions across the website.</p>
+
+                <form id="loginForm" onsubmit="handleLogin(event)" class="space-y-4">
+                    <div>
+                        <label for="passcode" class="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-2">Security Passcode</label>
+                        <input
+                            type="password"
+                            id="passcode"
+                            maxlength="8"
+                            inputmode="numeric"
+                            autocomplete="current-password"
+                            required
+                            placeholder="Enter passcode"
+                            class="form-input text-center text-2xl font-mono tracking-widest py-3 font-bold"
+                            autofocus
+                        >
+                    </div>
+
+                    <div id="loginError" class="hidden p-3 rounded-xl bg-red-50 border border-red-200 text-red-700 text-xs font-medium text-center">
+                        <i class="fas fa-exclamation-circle mr-1"></i> Incorrect passcode. Please try again.
+                    </div>
+
+                    <button
+                        type="submit"
+                        class="w-full accent-bg hover:bg-purple-700 text-white font-bold py-3.5 px-6 rounded-xl transition-all shadow-md text-sm uppercase tracking-wider flex items-center justify-center gap-2 cursor-pointer"
+                    >
+                        <i class="fas fa-unlock"></i> Unlock Dashboard
+                    </button>
+                </form>
+
+                <div class="mt-8 pt-4 border-t border-slate-200/80 text-[11px] text-slate-400">
+                    <p>Gowards Independent Funeral Services Ltd &bull; Authorized Access Only</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= ADMIN DASHBOARD ================= -->
+        <section id="adminDashboard" class="hidden space-y-6">
+
+            <!-- Banner / Controls Bar -->
+            <div class="glass-panel p-6 rounded-3xl border border-white/80 shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-4">
+                <div>
+                    <h2 class="text-2xl sm:text-3xl font-bold text-slate-900">Website Content Manager</h2>
+                    <p class="text-xs text-slate-500 mt-1">
+                        Any update saved here writes to the website and reflects on <a href="index.html" target="_blank" class="text-purple-700 font-semibold underline hover:text-purple-900">index.html</a> in real-time.
+                    </p>
+                </div>
+
+                <div class="flex flex-wrap items-center gap-2">
+                    <button onclick="saveAllChanges()" class="accent-bg hover:bg-purple-700 text-white font-bold px-5 py-2.5 rounded-xl text-xs uppercase tracking-wider transition-all shadow-md flex items-center gap-2">
+                        <i class="fas fa-save"></i> Save All Changes
+                    </button>
+                    <button onclick="confirmResetDefaults()" class="bg-white/80 hover:bg-slate-100 text-slate-700 font-semibold px-4 py-2.5 rounded-xl text-xs border border-slate-300 transition-all flex items-center gap-2">
+                        <i class="fas fa-undo"></i> Reset to Defaults
+                    </button>
+                    <button onclick="downloadUpdatedIndexHtml()" class="bg-slate-800 hover:bg-slate-900 text-white font-semibold px-4 py-2.5 rounded-xl text-xs transition-all flex items-center gap-2" title="Generate and download index.html with all your current edits embedded">
+                        <i class="fas fa-file-download"></i> Export index.html
+                    </button>
+                </div>
+            </div>
+
+            <!-- Toast Notification -->
+            <div id="toast" class="hidden transition-all duration-300 fixed bottom-6 right-6 z-50 bg-slate-900 text-white px-5 py-3.5 rounded-2xl shadow-2xl flex items-center gap-3 border border-purple-500/40 text-sm font-medium">
+                <i class="fas fa-check-circle text-green-400 text-lg"></i>
+                <span id="toastMsg">Changes saved!</span>
+            </div>
+
+            <!-- Search & Category Filters -->
+            <div class="glass-card p-4 sm:p-5 rounded-2xl flex flex-col sm:flex-row gap-4 items-center justify-between">
+                <div class="relative w-full sm:w-80">
+                    <i class="fas fa-search absolute left-3.5 top-3 text-slate-400 text-xs"></i>
+                    <input
+                        type="text"
+                        id="searchInput"
+                        oninput="filterCatalog()"
+                        placeholder="Search item title or description..."
+                        class="form-input pl-9 text-xs"
+                    >
+                </div>
+
+                <div class="flex flex-wrap items-center gap-2 w-full sm:w-auto">
+                    <button onclick="setCategoryFilter('all')" id="cat-all" class="cat-filter-btn px-3.5 py-1.5 rounded-full text-xs font-semibold bg-purple-700 text-white">All (<span id="count-all">0</span>)</button>
+                    <button onclick="setCategoryFilter('Funeral Packages')" id="cat-packages" class="cat-filter-btn px-3.5 py-1.5 rounded-full text-xs font-semibold bg-white/70 text-slate-700 hover:bg-purple-100">Funeral Packages (<span id="count-packages">0</span>)</button>
+                    <button onclick="setCategoryFilter('Coffins')" id="cat-coffins" class="cat-filter-btn px-3.5 py-1.5 rounded-full text-xs font-semibold bg-white/70 text-slate-700 hover:bg-purple-100">Coffins (<span id="count-coffins">0</span>)</button>
+                    <button onclick="setCategoryFilter('Caskets & Urns')" id="cat-caskets" class="cat-filter-btn px-3.5 py-1.5 rounded-full text-xs font-semibold bg-white/70 text-slate-700 hover:bg-purple-100">Caskets & Urns (<span id="count-caskets">0</span>)</button>
+                    <button onclick="setCategoryFilter('Services Overview')" id="cat-services" class="cat-filter-btn px-3.5 py-1.5 rounded-full text-xs font-semibold bg-white/70 text-slate-700 hover:bg-purple-100">Services (<span id="count-services">0</span>)</button>
+                </div>
+            </div>
+
+            <!-- Catalog Items Grid -->
+            <div id="catalogGrid" class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <!-- Dynamically populated -->
+            </div>
+
+            <div id="noResults" class="hidden p-12 text-center glass-card rounded-3xl">
+                <i class="fas fa-search text-3xl text-slate-300 mb-3"></i>
+                <p class="text-slate-600 font-medium">No matching items found.</p>
+                <button onclick="clearSearch()" class="mt-3 text-xs text-purple-700 font-bold underline">Clear search</button>
+            </div>
+
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="glass-panel-dark text-white/80 py-6 border-t border-white/10 text-center text-xs mt-12">
+        <p>&copy; 2026 Gowards Independent Funeral Services Ltd &bull; Administrator Portal</p>
+        <p class="text-[11px] text-slate-400 mt-1">Changes are immediately synchronized to the website via browser storage & direct export.</p>
+    </footer>
+
+    <!-- Catalog Default Data -->
+    <script src="default_catalog.js"></script>
+
+    <script>
+        // Authentication passcode requested by user: 1982
+        const ADMIN_PASSCODE = "1982";
+        const STORAGE_KEY = "gowards_catalog_data";
+        const AUTH_KEY = "gowards_admin_auth";
+
+        let currentCatalog = [];
+        let activeCategory = 'all';
+
+        // Check login on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            initCatalogData();
+            if (sessionStorage.getItem(AUTH_KEY) === "true") {
+                showDashboard();
+            } else {
+                showLogin();
+            }
+        });
+
+        function initCatalogData() {
+            try {
+                const stored = localStorage.getItem(STORAGE_KEY);
+                if (stored) {
+                    const parsed = JSON.parse(stored);
+                    if (Array.isArray(parsed) && parsed.length > 0) {
+                        currentCatalog = parsed;
+                    } else {
+                        currentCatalog = JSON.parse(JSON.stringify(DEFAULT_CATALOG));
+                    }
+                } else {
+                    currentCatalog = JSON.parse(JSON.stringify(DEFAULT_CATALOG));
+                    localStorage.setItem(STORAGE_KEY, JSON.stringify(currentCatalog));
+                }
+            } catch (e) {
+                console.error("Error loading catalog:", e);
+                currentCatalog = JSON.parse(JSON.stringify(DEFAULT_CATALOG));
+            }
+        }
+
+        function handleLogin(e) {
+            e.preventDefault();
+            const input = document.getElementById('passcode').value.trim();
+            const errorEl = document.getElementById('loginError');
+
+            if (input === ADMIN_PASSCODE) {
+                errorEl.classList.add('hidden');
+                sessionStorage.setItem(AUTH_KEY, "true");
+                showDashboard();
+            } else {
+                errorEl.classList.remove('hidden');
+                document.getElementById('passcode').value = '';
+                document.getElementById('passcode').focus();
+            }
+        }
+
+        function handleLogout() {
+            sessionStorage.removeItem(AUTH_KEY);
+            showLogin();
+        }
+
+        function showLogin() {
+            document.getElementById('loginScreen').classList.remove('hidden');
+            document.getElementById('adminDashboard').classList.add('hidden');
+            document.getElementById('logoutBtn').classList.add('hidden');
+            const passInput = document.getElementById('passcode');
+            if (passInput) passInput.value = '';
+        }
+
+        function showDashboard() {
+            document.getElementById('loginScreen').classList.add('hidden');
+            document.getElementById('adminDashboard').classList.remove('hidden');
+            document.getElementById('logoutBtn').classList.remove('hidden');
+            updateCategoryCounts();
+            renderCatalog();
+        }
+
+        function updateCategoryCounts() {
+            document.getElementById('count-all').textContent = currentCatalog.length;
+            document.getElementById('count-packages').textContent = currentCatalog.filter(i => i.category === 'Funeral Packages').length;
+            document.getElementById('count-coffins').textContent = currentCatalog.filter(i => i.category === 'Coffins').length;
+            document.getElementById('count-caskets').textContent = currentCatalog.filter(i => i.category === 'Caskets & Urns').length;
+            document.getElementById('count-services').textContent = currentCatalog.filter(i => i.category === 'Services Overview').length;
+        }
+
+        function setCategoryFilter(category) {
+            activeCategory = category;
+
+            const buttons = document.querySelectorAll('.cat-filter-btn');
+            buttons.forEach(btn => {
+                btn.className = 'cat-filter-btn px-3.5 py-1.5 rounded-full text-xs font-semibold bg-white/70 text-slate-700 hover:bg-purple-100 transition-colors';
+            });
+
+            let activeBtnId = 'cat-all';
+            if (category === 'Funeral Packages') activeBtnId = 'cat-packages';
+            else if (category === 'Coffins') activeBtnId = 'cat-coffins';
+            else if (category === 'Caskets & Urns') activeBtnId = 'cat-caskets';
+            else if (category === 'Services Overview') activeBtnId = 'cat-services';
+
+            const activeBtn = document.getElementById(activeBtnId);
+            if (activeBtn) {
+                activeBtn.className = 'cat-filter-btn px-3.5 py-1.5 rounded-full text-xs font-semibold bg-purple-700 text-white transition-colors';
+            }
+
+            renderCatalog();
+        }
+
+        function filterCatalog() {
+            renderCatalog();
+        }
+
+        function clearSearch() {
+            document.getElementById('searchInput').value = '';
+            renderCatalog();
+        }
+
+        function renderCatalog() {
+            const grid = document.getElementById('catalogGrid');
+            const noResults = document.getElementById('noResults');
+            const searchTerm = (document.getElementById('searchInput').value || '').toLowerCase().trim();
+
+            grid.innerHTML = '';
+
+            const filtered = currentCatalog.filter(item => {
+                const matchesCat = (activeCategory === 'all') || (item.category === activeCategory);
+                const matchesSearch = !searchTerm ||
+                    item.title.toLowerCase().includes(searchTerm) ||
+                    (item.price && item.price.toLowerCase().includes(searchTerm)) ||
+                    (item.description && item.description.toLowerCase().includes(searchTerm));
+                return matchesCat && matchesSearch;
+            });
+
+            if (filtered.length === 0) {
+                grid.classList.add('hidden');
+                noResults.classList.remove('hidden');
+                return;
+            }
+
+            grid.classList.remove('hidden');
+            noResults.classList.add('hidden');
+
+            filtered.forEach(item => {
+                const card = document.createElement('div');
+                card.className = 'glass-card p-6 rounded-3xl border border-white/80 flex flex-col justify-between';
+                card.id = `card-${item.id}`;
+
+                const hasPrice = item.price !== undefined && item.category !== 'Services Overview';
+
+                card.innerHTML = `
+                    <div>
+                        <div class="flex items-start justify-between gap-3 mb-4">
+                            <div>
+                                <span class="inline-block px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-purple-100 text-purple-800 mb-1">
+                                    ${item.category}
+                                </span>
+                                <h3 class="text-xl font-bold text-slate-800 leading-snug">${item.title}</h3>
+                            </div>
+                            <span class="text-xs font-mono text-slate-400 bg-slate-100 px-2 py-1 rounded">${item.id}</span>
+                        </div>
+
+                        ${hasPrice ? `
+                        <div class="mb-4">
+                            <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1.5">
+                                Price <span class="text-purple-600">*</span>
+                            </label>
+                            <input
+                                type="text"
+                                id="price-${item.id}"
+                                value="${escapeHtml(item.price)}"
+                                oninput="markDirty('${item.id}')"
+                                class="form-input font-semibold text-slate-800"
+                                placeholder="e.g. From £275.00"
+                            >
+                        </div>
+                        ` : ''}
+
+                        <div class="mb-4">
+                            <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1.5">
+                                Description
+                            </label>
+                            <textarea
+                                id="desc-${item.id}"
+                                rows="3"
+                                oninput="markDirty('${item.id}')"
+                                class="form-input text-slate-700 leading-relaxed text-sm custom-scrollbar"
+                                placeholder="Description shown on website..."
+                            >${escapeHtml(item.description || '')}</textarea>
+                        </div>
+                    </div>
+
+                    <div class="pt-4 border-t border-slate-200/70 flex items-center justify-between">
+                        <span id="status-${item.id}" class="text-[11px] text-slate-400 italic">Saved</span>
+                        <div class="flex gap-2">
+                            <button
+                                onclick="saveSingleItem('${item.id}')"
+                                class="accent-bg hover:bg-purple-700 text-white font-bold px-4 py-2 rounded-xl text-xs uppercase tracking-wider transition-all shadow-sm flex items-center gap-1.5"
+                            >
+                                <i class="fas fa-check"></i> Save
+                            </button>
+                        </div>
+                    </div>
+                `;
+
+                grid.appendChild(card);
+            });
+        }
+
+        function markDirty(id) {
+            const statusEl = document.getElementById(`status-${id}`);
+            if (statusEl) {
+                statusEl.textContent = 'Unsaved changes';
+                statusEl.className = 'text-[11px] text-amber-600 font-semibold';
+            }
+        }
+
+        function saveSingleItem(id) {
+            const item = currentCatalog.find(i => i.id === id);
+            if (!item) return;
+
+            const priceInput = document.getElementById(`price-${id}`);
+            const descInput = document.getElementById(`desc-${id}`);
+
+            if (priceInput) item.price = priceInput.value.trim();
+            if (descInput) item.description = descInput.value.trim();
+
+            persistCatalog();
+
+            const statusEl = document.getElementById(`status-${id}`);
+            if (statusEl) {
+                statusEl.textContent = 'Saved to website!';
+                statusEl.className = 'text-[11px] text-green-600 font-semibold';
+                setTimeout(() => {
+                    statusEl.textContent = 'Saved';
+                    statusEl.className = 'text-[11px] text-slate-400 italic';
+                }, 2500);
+            }
+
+            showToast(`Updated "${item.title}" successfully!`);
+        }
+
+        function saveAllChanges() {
+            currentCatalog.forEach(item => {
+                const priceInput = document.getElementById(`price-${item.id}`);
+                const descInput = document.getElementById(`desc-${item.id}`);
+
+                if (priceInput) item.price = priceInput.value.trim();
+                if (descInput) item.description = descInput.value.trim();
+
+                const statusEl = document.getElementById(`status-${item.id}`);
+                if (statusEl) {
+                    statusEl.textContent = 'Saved';
+                    statusEl.className = 'text-[11px] text-slate-400 italic';
+                }
+            });
+
+            persistCatalog();
+            showToast('All prices and descriptions updated on website!');
+        }
+
+        function persistCatalog() {
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(currentCatalog));
+            window.dispatchEvent(new Event('storage'));
+        }
+
+        function confirmResetDefaults() {
+            if (confirm("Are you sure you want to reset all prices and descriptions to their original defaults? Any custom modifications will be lost.")) {
+                currentCatalog = JSON.parse(JSON.stringify(DEFAULT_CATALOG));
+                persistCatalog();
+                renderCatalog();
+                showToast("All items have been reset to factory defaults.");
+            }
+        }
+
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            const msg = document.getElementById('toastMsg');
+            msg.textContent = message;
+            toast.classList.remove('hidden');
+            setTimeout(() => {
+                toast.classList.add('hidden');
+            }, 3000);
+        }
+
+        function escapeHtml(text) {
+            if (!text) return '';
+            return text
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/"/g, "&quot;")
+                .replace(/'/g, "&#039;");
+        }
+
+        // Export updated index.html with all current custom values pre-populated into HTML
+        async function downloadUpdatedIndexHtml() {
+            try {
+                const resp = await fetch('index.html');
+                if (!resp.ok) {
+                    alert("Could not read index.html automatically. Changes remain safely active in browser.");
+                    return;
+                }
+                let html = await resp.text();
+
+                // Update html string with all items in currentCatalog
+                currentCatalog.forEach(item => {
+                    if (item.price) {
+                        const priceRe = new RegExp(`(<span data-catalog-price="${item.id}">)[^<]*(<\\/span>)`);
+                        html = html.replace(priceRe, `$1${item.price}$2`);
+                    }
+                    if (item.description !== undefined) {
+                        const descRe = new RegExp(`(<p data-catalog-desc="${item.id}"[^>]*>)[^<]*(<\\/p>)`);
+                        html = html.replace(descRe, `$1${item.description}$2`);
+                    }
+                });
+
+                const blob = new Blob([html], { type: 'text/html' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'index.html';
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+                showToast('Exported updated index.html successfully!');
+            } catch (err) {
+                console.error("Export error:", err);
+                alert("Export error: " + err.message);
+            }
+        }
+    </script>
+</body>
+</html>
